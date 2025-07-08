@@ -9,13 +9,29 @@
             list-style: none;
             padding: 0;
             grid-template-columns: repeat(18,0px);
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
         }
+
+        .guess-wrapper {
+            display: flex;
+            margin-top: 1vw;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+        }
+
     </style>
 </head>
 <body>
-    <h1> TEST </h1>
+    <large-element id="largeel" data-text="1" atmno-text="?"></large-element>
 
-    <button onclick ="OnButtonPressed()">CLICK</button>
+
+    <div class="guess-wrapper">
+        <input type="text" id="guessbox" oninput="OnTextEntered()">
+    </div>
 
     <ul></ul>
     
