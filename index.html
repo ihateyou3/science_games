@@ -57,6 +57,32 @@
             font-size: 1.75vw
         }
 
+        
+        .tmguesses {
+            margin-top: 0px;
+            -webkit-text-stroke: 1px rgb(27, 27, 27);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            display: flex;
+            float: right;
+            color: rgb(167, 167, 167);
+            font-size: 1vw
+        }
+
+        #guessbox2 {
+            height: 1.25vw;
+            margin-top: 3%;
+            border-right: none;
+            border-top: none;
+            border-left: solid;
+            border-bottom: solid;
+            border-width: 2px;
+            border-color: rgb(27, 27, 27);
+
+            border-radius: 4px;
+            background-color: dimgrey;
+        }
+
         .timer {
             margin-top: 10px;
             margin-bottom: 20px;
@@ -67,17 +93,28 @@
             font-size: 1.75vw
         }
 
+        #guessbox2:disabled {
+            background-color: rgb(48, 48, 48)
+        }
+
+
     </style>
 </head>
 <body>
-     <div class="timer">0:00</div>
+    <div class="timer">00:00:00</div>
 
     <large-element id="largeel" data-text="1" atmno-text="?"></large-element>
 
     <div class="guesses">0/0</div>
 
+    <div class="tmguesses">0/0</div>
+
     <div class="guess-wrapper">
-        <input type="text" id="guessbox"">
+        <input type="text" placeholder="Name of element" id="guessbox">
+    </div>
+
+    <div class="guess2-wrapper">
+        <input type="text" placeholder="d electron count" id="guessbox2" disabled>
     </div>
 
     <ul></ul>
