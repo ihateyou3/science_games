@@ -52,6 +52,18 @@ class IndivElement extends HTMLElement {
 
         text1.textContent = text2
 
+        let atmno = this.getAttribute("atmno-text");
+
+        const text3 = document.createElement("div");
+        text3.setAttribute("class", "div2");
+        text3.textContent = atmno;
+
+        const atmweight = this.getAttribute("atmweight");
+
+        const text4 = document.createElement("div");
+        text4.setAttribute("class", "div3");
+        text4.textContent = atmweight;
+
         let textsize = "";
 
         if(text2.length < 9) {
@@ -79,10 +91,12 @@ class IndivElement extends HTMLElement {
             align-items: center;
             border: 1px solid black;
             padding: 0px;
-            background: white;
+            background: dimgrey;
             border-radius: 0;
             opacity: 1;
             position: absolute;
+            border-color: #323437;
+            text-color: rgb(27, 27, 27);
             z-index: 3;
             color: rgba(0, 0, 0, 0);
         }
@@ -92,7 +106,24 @@ class IndivElement extends HTMLElement {
             font-size: ${textsize};
             z-index: 5;
             position: absolute;
-            bottom: 0;
+            bottom: 3px;
+        }
+
+        .div2 {
+            font-family: Arial, sans-serif;
+            font-size: 0.5vw;
+            position: absolute;
+            display: flex;
+            top: 5%;
+            left: 7.5%;
+        }
+        .div3 {
+            font-family: Arial, sans-serif;
+            font-size: 0.4vw;
+            position: absolute;
+            display: flex;
+            top: 8%;
+            right: 7.5%;
         }
         `;
 
@@ -100,6 +131,9 @@ class IndivElement extends HTMLElement {
         shadow.appendChild(wrapper);
         wrapper.appendChild(info);
         info.appendChild(text1);
+        info.appendChild(text3);
+        info.appendChild(text4);
+
     }
 }
 
@@ -172,13 +206,17 @@ class LargeElement extends HTMLElement {
 
         const text1 = document.createElement("div");
         text1.setAttribute("class", "div1");
+        text1.textContent = text2
 
         const text3 = document.createElement("div");
         text3.setAttribute("class", "div2");
-
         text3.textContent = text;
 
-        text1.textContent = text2
+        const atmweight = this.getAttribute("atmweight");
+
+        const text4 = document.createElement("div");
+        text4.setAttribute("class", "div3");
+        text4.textContent = text;
 
         const style = document.createElement("style");
 
@@ -189,6 +227,7 @@ class LargeElement extends HTMLElement {
 
         .info {
             font-family: Arial, sans-serif;
+            color:rgb(50, 50, 50);
             font-size: 1.25vw;
             margin: 0px auto;
             width: 10vw;
@@ -198,7 +237,7 @@ class LargeElement extends HTMLElement {
             align-items: center;
             border: 1px solid black;
             padding: 0px;
-            background: white;
+            background: dimgrey;
             position: relative;
             opacity: 1;
             z-index: 3;
@@ -222,6 +261,15 @@ class LargeElement extends HTMLElement {
             top: 5%;
             left: 7.5%;
         }
+
+        .div3 {
+            font-family: Arial, sans-serif;
+            font-size: 2vw;
+            position: absolute;
+            display: flex;
+            top: 5%;
+            right: 7.5%;
+        }
         `;
 
         shadow.appendChild(style);
@@ -229,6 +277,7 @@ class LargeElement extends HTMLElement {
         wrapper.appendChild(info);
         info.appendChild(text1);
         info.appendChild(text3);
+        info.appendChild(text4);
     }
 }
 
@@ -259,46 +308,48 @@ function LoadElements() {
                 let ind = periodicTableNumbers[ind1] - 1;
                 switch(true) {
                     case i == 1: 
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
                         ind1++
                         break;
                     case i > 1 && i < 18:
                         AddBlank()
                         break;
                     case i >= 18 && i < 21:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
                         ind1++
                         break;
                     case i > 21 && i < 32:
                         AddBlank()
                         break;
                     case i >= 32 && i < 40:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
                         ind1++
                         break;
                     case i > 40 && i < 51:
                         AddBlank()
                         break;
                     case i >= 51 && i < 129:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
                         ind1++
                         break;
                     case i >= 129 && i < 132:
                         AddBlank()
                         break;
                     case i >= 132 && i < 146:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
                         ind1++
                         break;
                     case i >= 146 && i < 150:
                         AddBlank()
                         break;
                     case i >= 150 && i < 164:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
                         ind1++
                         break;
                 }
             }
+
+            CurrIndicator();
 
         });
 }
@@ -314,6 +365,8 @@ let largeel = document.getElementById("largeel");
 let root = largeel.shadowRoot;
 
 let numba = root.querySelector(".div2");
+let atmw = root.querySelector(".div3");
+
 
 function OnTextEntered() {
     let guess = guessbox.value;
@@ -326,11 +379,14 @@ function OnTextEntered() {
         console.log("Correct!");
         guessbox.value = "";
 
-
         currelementind += 1;
         currelement = elementdata[currelementind];
 
         numba.textContent = currelementind + 1;
+        atmw.textContent = elementdata[currelementind].atomic_mass.toFixed(2);
+
+        CurrIndicator();
+        RemoveOldIndicator();
     }
 }
 
@@ -338,15 +394,38 @@ function AddBlank() {
     listEl.insertAdjacentHTML("beforeend", `<blank-element></blank-element>`);
 }
 
-function AddElement(sym, name, ind) {
-    listEl.insertAdjacentHTML("beforeend", `<indiv-element id="a${ind}" data-text=${sym} name-text=${name}></indiv-element>`);
+function AddElement(sym, name, weight, ind) {
+    listEl.insertAdjacentHTML("beforeend", `<indiv-element id="a${ind}" data-text=${sym} atmno-text=${periodicTableNumbers[ind]} atmweight=${weight} name-text=${name}></indiv-element>`);
 }
 
 function ChangeVisibility(ind) {
     let indel = listEl.querySelector("#a" + ind);
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
-    let div = shadow.querySelector(".div1");
 
-    info.style.color = "rgba(0,0,0,1)";
+    info.style.color = "rgba(30,30,30,1)";
+}
+
+function CurrIndicator() {
+    let indel = listEl.querySelector("#a" + currelementind);
+    let shadow = indel.shadowRoot;
+    let info = shadow.querySelector(".info");
+    info.style.borderColor = "rgb(200,200,200)";
+    info.style.zIndex = "10"
+}
+
+function StopIndicator() {
+    let indel = listEl.querySelector("#a" + currelementind);
+    let shadow = indel.shadowRoot;
+    let info = shadow.querySelector(".info");
+    info.style.borderColor = "rgb(255, 118, 118)";
+    info.style.zIndex = "10"
+}
+
+function RemoveOldIndicator() {
+    let indel = listEl.querySelector("#a" + (currelementind - 1));
+    let shadow = indel.shadowRoot;
+    let info = shadow.querySelector(".info");
+    info.style.borderColor = "#323437";
+    info.style.zIndex = "3"
 }
