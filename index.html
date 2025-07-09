@@ -5,7 +5,7 @@
     <style>
         body {
             background-color: #323437;
-            margin-top: 10vh;
+            margin-top: 5vh;
 
             display: flex;
             flex-direction: column;     
@@ -57,9 +57,21 @@
             font-size: 1.75vw
         }
 
+        .timer {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            -webkit-text-stroke: 1px rgb(27, 27, 27);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: dimgrey;
+            font-size: 1.75vw
+        }
+
     </style>
 </head>
 <body>
+     <div class="timer">0:00</div>
+
     <large-element id="largeel" data-text="1" atmno-text="?"></large-element>
 
     <div class="guesses">0/0</div>

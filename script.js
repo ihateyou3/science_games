@@ -293,8 +293,22 @@ LoadTable()
 
 const listEl = document.querySelector("ul");
 const guessCntr = document.querySelector(".guesses");
+const timerHTML = document.querySelector(".timer");
 
 let elementdata = [];
+
+let time = 0;
+var start = Date.now();
+var interval = setInterval(function() {
+    time = Date.now() - start; 
+    UpdateTimer();
+}, 10);
+
+ const pad = (n) => n < 10 ? `0${n}` : n;
+
+function UpdateTimer() {
+    timerHTML.textContent = pad(Math.floor((time / 60000)).toFixed(0)) + ":" + pad(Math.floor((time / 1000) % 60).toFixed(0)) + ":" + pad(((time % 1000) / 10).toFixed(0))
+}
 
 function LoadElements() {
     fetch('./PeriodicTableJSON.json')
@@ -387,7 +401,10 @@ function OnTextEntered() {
         console.log("Correct!");
         guessbox.value = "";
 
-        currelementind += 1;
+        currelementind += 1; 
+        if(currelementind > 118) {
+            clearInterval(interval);
+        }
         currelement = elementdata[currelementind];
 
         numba.textContent = currelementind + 1;
@@ -397,6 +414,8 @@ function OnTextEntered() {
             correct += 1;
             tot += 1;
         }
+
+       
 
         guessCntr.textContent = correct + "/" + tot;
 
@@ -408,7 +427,7 @@ function OnTextEntered() {
         if(!currwrong){
             tot += 1;
         }
-        
+
         WrongIndicator();
     }
 }
