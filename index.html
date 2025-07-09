@@ -48,14 +48,24 @@
             background-color: dimgrey;
         }
 
+        .guesses {
+            margin-top: 10px;
+            -webkit-text-stroke: 1px rgb(27, 27, 27);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: dimgrey;
+            font-size: 1.75vw
+        }
+
     </style>
 </head>
 <body>
     <large-element id="largeel" data-text="1" atmno-text="?"></large-element>
 
+    <div class="guesses">0/0</div>
 
     <div class="guess-wrapper">
-        <input type="text" id="guessbox" oninput="OnTextEntered()">
+        <input type="text" id="guessbox"">
     </div>
 
     <ul></ul>

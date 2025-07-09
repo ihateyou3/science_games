@@ -292,8 +292,9 @@ function LoadTable() {
 LoadTable()
 
 const listEl = document.querySelector("ul");
-let elementdata = [];
+const guessCntr = document.querySelector(".guesses");
 
+let elementdata = [];
 
 function LoadElements() {
     fetch('./PeriodicTableJSON.json')
@@ -354,8 +355,9 @@ function LoadElements() {
         });
 }
 
-let tot = 118;
+let tot = 0;
 let correct = 0;
+let currwrong = false;
 
 let currelementind = 0;
 let currelement = "";
@@ -367,13 +369,19 @@ let root = largeel.shadowRoot;
 let numba = root.querySelector(".div2");
 let atmw = root.querySelector(".div3");
 
+guessbox.addEventListener("keydown", function(event) {
+    if(event.key === "Enter") {
+        console.log("HI");
+        OnTextEntered();
+    }
+});
 
 function OnTextEntered() {
     let guess = guessbox.value;
 
     console.log(guess);
     console.log(elementdata);
-    if(guess == currelement.name){
+    if(guess.toLowerCase() == currelement.name.toLowerCase()){
         ChangeVisibility(currelementind);
 
         console.log("Correct!");
@@ -385,8 +393,23 @@ function OnTextEntered() {
         numba.textContent = currelementind + 1;
         atmw.textContent = elementdata[currelementind].atomic_mass.toFixed(2);
 
+        if(!currwrong){
+            correct += 1;
+            tot += 1;
+        }
+
+        guessCntr.textContent = correct + "/" + tot;
+
         CurrIndicator();
         RemoveOldIndicator();
+
+        currwrong = false;
+    } else {
+        if(!currwrong){
+            tot += 1;
+        }
+        
+        WrongIndicator();
     }
 }
 
@@ -414,15 +437,18 @@ function CurrIndicator() {
     info.style.zIndex = "10"
 }
 
-function StopIndicator() {
+function WrongIndicator() {
     let indel = listEl.querySelector("#a" + currelementind);
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
     info.style.borderColor = "rgb(255, 118, 118)";
-    info.style.zIndex = "10"
+    info.style.zIndex = "11"
+    
+    currwrong = true;
 }
 
 function RemoveOldIndicator() {
+    if(currwrong){return;}
     let indel = listEl.querySelector("#a" + (currelementind - 1));
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
