@@ -263,7 +263,7 @@ class radIndivElement extends HTMLElement {
             position: absolute;
             display: flex;
             top: 5%;
-            left: 7.5%;
+            left: 0%;
         }
         
         .div3 {
