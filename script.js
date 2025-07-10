@@ -491,42 +491,42 @@ function LoadElements() {
                 let ind = periodicTableNumbers[ind1] - 1;
                 switch(true) {
                     case i == 1: 
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), data.elements[ind].number, ind1);
                         ind1++
                         break;
                     case i > 1 && i < 18:
                         AddBlank()
                         break;
                     case i >= 18 && i < 21:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), data.elements[ind].number, ind1);
                         ind1++
                         break;
                     case i > 21 && i < 32:
                         AddBlank()
                         break;
                     case i >= 32 && i < 40:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), data.elements[ind].number, ind1);
                         ind1++
                         break;
                     case i > 40 && i < 51:
                         AddBlank()
                         break;
                     case i >= 51 && i < 129:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), data.elements[ind].number, ind1);
                         ind1++
                         break;
                     case i >= 129 && i < 132:
                         AddBlank()
                         break;
                     case i >= 132 && i < 146:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), data.elements[ind].number, ind1);
                         ind1++
                         break;
                     case i >= 146 && i < 150:
                         AddBlank()
                         break;
                     case i >= 150 && i < 164:
-                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), ind1);
+                        AddElement(data.elements[ind].symbol, data.elements[ind].name, data.elements[ind].atomic_mass.toFixed(2), data.elements[ind].number, ind1);
                         ind1++
                         break;
                 }
@@ -589,7 +589,6 @@ function tmWinChk(){
         deltot+=1;
         currtmguessed = true;
     } else if (!currtmguessed){
-        currt
         deltot+=1;
         currtmguessed = true;
     }
@@ -623,7 +622,7 @@ function WinChk() {
 
 
         currelementind += 1; 
-        if(currelementind > 118) {
+        if(currelementind == 118) {
             clearInterval(interval);
         }
 
@@ -668,16 +667,17 @@ function AddBlank() {
     listEl.insertAdjacentHTML("beforeend", `<blank-element></blank-element>`);
 }
 
-function AddElement(sym, name, weight, ind) {
+function AddElement(sym, name, weight, num, ind) {
     if(isRadioactive[periodicTableNumbers[ind]]) {
-        listEl.insertAdjacentHTML("beforeend", `<indiv-element-rad id="a${ind}" data-text=${sym} atmno-text=${periodicTableNumbers[ind]} atmweight=${weight} name-text=${name}></indiv-element-rad>`);
+        listEl.insertAdjacentHTML("beforeend", `<indiv-element-rad id="a${num}" data-text=${sym} atmno-text=${periodicTableNumbers[ind]} atmweight=${weight} name-text=${name}></indiv-element-rad>`);
     } else {
-        listEl.insertAdjacentHTML("beforeend", `<indiv-element id="a${ind}" data-text=${sym} atmno-text=${periodicTableNumbers[ind]} atmweight=${weight} name-text=${name}></indiv-element>`);    
+        listEl.insertAdjacentHTML("beforeend", `<indiv-element id="a${num}" data-text=${sym} atmno-text=${periodicTableNumbers[ind]} atmweight=${weight} name-text=${name}></indiv-element>`);    
     }
 }
 
 function ChangeVisibility(ind) {
-    let indel = listEl.querySelector("#a" + ind);
+    let indel = listEl.querySelector("#a" + (currelementind+1));
+    
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
 
@@ -685,7 +685,7 @@ function ChangeVisibility(ind) {
 }
 
 function CurrIndicator() {
-    let indel = listEl.querySelector("#a" + currelementind);
+    let indel = listEl.querySelector("#a" + (currelementind+1));
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
     info.style.borderColor = "rgb(200,200,200)";
@@ -693,7 +693,7 @@ function CurrIndicator() {
 }
 
 function WrongIndicator() {
-    let indel = listEl.querySelector("#a" + currelementind);
+    let indel = listEl.querySelector("#a" + (currelementind+1));
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
     info.style.borderColor = "rgb(255, 118, 118)";
@@ -704,7 +704,7 @@ function WrongIndicator() {
 
 function RemoveOldIndicator() {
     if(currwrong){return;}
-    let indel = listEl.querySelector("#a" + (currelementind - 1));
+    let indel = listEl.querySelector("#a" + (currelementind));
     let shadow = indel.shadowRoot;
     let info = shadow.querySelector(".info");
     info.style.borderColor = "#323437";
