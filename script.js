@@ -544,6 +544,7 @@ let delcorrect = 0;
 let deltot = 0;
 
 let currwrong = false;
+let currtmguessed = false;
 
 let currelementind = 0;
 let currelement = "";
@@ -583,11 +584,14 @@ function OnTextEntered() {
 function tmWinChk(){
     let guess = guessbox2.value;
 
-    if(guess == tmDElectrons[currelement.number]){
+    if(guess == tmDElectrons[currelement.number] && !currtmguessed){
         delcorrect+=1;
         deltot+=1;
-    } else {
+        currtmguessed = true;
+    } else if (!currtmguessed){
+        currt
         deltot+=1;
+        currtmguessed = true;
     }
 
     tmguessCntr.textContent = delcorrect + "/" + deltot;
@@ -639,6 +643,10 @@ function WinChk() {
         if(!currwrong){
             correct += 1;
             tot += 1;
+        }
+
+        if(currtmguessed) {
+            currtmguessed = false;
         }
 
         guessCntr.textContent = correct + "/" + tot;
