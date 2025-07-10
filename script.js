@@ -552,6 +552,7 @@ let isTM = false;
 
 let guessbox = document.getElementById("guessbox");
 let guessbox2 = document.getElementById("guessbox2");
+let win = document.getElementById("winrar");
 
 let largeel = document.getElementById("largeel");
 let root = largeel.shadowRoot;
@@ -564,6 +565,12 @@ let timerstarted = false;
 guessbox.addEventListener("keydown", function(event) {
     if(event.key === "Enter") {
         OnTextEntered();
+    }
+});
+
+guessbox.addEventListener("keydown", function(event) {
+    if(event.key === "F9") {
+        EndGame();
     }
 });
 
@@ -623,7 +630,7 @@ function WinChk() {
 
         currelementind += 1; 
         if(currelementind == 118) {
-            clearInterval(interval);
+            EndGame();
         }
 
         currelement = elementdata[currelementind];
@@ -661,6 +668,12 @@ function WinChk() {
 
         WrongIndicator();
     }
+}
+
+function EndGame() {
+    clearInterval(interval);
+
+    win.textContent = "You win!";
 }
 
 function AddBlank() {
